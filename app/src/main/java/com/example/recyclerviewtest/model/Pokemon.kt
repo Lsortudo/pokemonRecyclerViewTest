@@ -5,7 +5,7 @@ data class Pokemon(
     var generation: String? = null,
     var thumbnailUrl: String? = null,
     var link: String? = null,
-    var listType: Array<String?>,
+    var listType: Array<String>,
 
 
     )
