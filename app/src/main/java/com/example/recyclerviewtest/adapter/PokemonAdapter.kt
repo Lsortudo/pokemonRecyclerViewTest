@@ -8,8 +8,8 @@ import com.example.recyclerviewtest.R
 import com.example.recyclerviewtest.model.Pokemon
 import kotlinx.android.synthetic.main.list_item_pokemon.view.*
 
-class PokemonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-    private var items : List<Pokemon> = ArrayList()
+class PokemonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private var items: List<Pokemon> = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return PokemonViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.list_item_pokemon, parent, false)
@@ -19,7 +19,7 @@ class PokemonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
-        when (holder){
+        when (holder) {
             is PokemonViewHolder -> {
                 holder.bind(items[position])
             }
@@ -31,9 +31,13 @@ class PokemonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
         return items.size
     }
 
+    fun setDataSet(pokemons: List<Pokemon>) {
+        this.items = pokemons
+    }
+
     class PokemonViewHolder constructor(
-        itemView: View
-    ): RecyclerView.ViewHolder(itemView) {
+        itemView: View,
+    ) : RecyclerView.ViewHolder(itemView) {
 
         private val pokemonImage = itemView.ivImagePokemon
         private val pokemonName = itemView.tvNamePokemon
