@@ -1,5 +1,7 @@
 package com.example.recyclerviewtest.view
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var pokemonAdapter : PokemonAdapter
+    private lateinit var pokemonAdapter: PokemonAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,10 +28,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        this.pokemonAdapter = PokemonAdapter()
+        this.pokemonAdapter = PokemonAdapter { pokemon ->
+            pokemon.link?.let { openLink(it) }
+        }
 
-        recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
-        recyclerView.adapter = this.pokemonAdapter
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = pokemonAdapter
+        }
+        /*recyclerView.layoutManager = LinearLayoutManager(this@MainActivity)
+        recyclerView.adapter = this.pokemonAdapter*/
 
+    }
+
+    private fun openLink(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 }

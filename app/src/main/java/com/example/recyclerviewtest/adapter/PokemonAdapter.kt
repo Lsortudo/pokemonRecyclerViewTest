@@ -11,7 +11,7 @@ import com.example.recyclerviewtest.R
 import com.example.recyclerviewtest.model.Pokemon
 import kotlinx.android.synthetic.main.list_item_pokemon.view.*
 
-class PokemonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PokemonAdapter(private val onItemClicked: (Pokemon) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private var items: List<Pokemon> = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return PokemonViewHolder(
@@ -24,7 +24,7 @@ class PokemonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         when (holder) {
             is PokemonViewHolder -> {
-                holder.bind(items[position])
+                holder.bind(items[position], onItemClicked)
             }
         }
 
@@ -48,7 +48,7 @@ class PokemonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private val pokemonTypeTWO = itemView.tvTypePokemonTWO
         private val pokemonGeneration = itemView.tvGenerationPokemon
 
-        fun bind(pokemon: Pokemon) {
+        fun bind(pokemon: Pokemon, onItemClicked: (Pokemon) -> Unit) {
 
             /*var listTypeOfPokemon = arrayOf("${pokemonTypeONE.text}", "${pokemonTypeTWO.text}")
             listTypeOfPokemon = pokemon.listType*/
@@ -80,6 +80,10 @@ class PokemonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 .load(pokemon.thumbnailUrl)
                 .into(pokemonImage)
 
+
+            itemView.setOnClickListener{
+                onItemClicked(pokemon)
+            }
         }
     }
 }
