@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.recyclerviewtest.R
 import com.example.recyclerviewtest.model.Pokemon
 import kotlinx.android.synthetic.main.list_item_pokemon.view.*
@@ -51,6 +53,12 @@ class PokemonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             /*var listTypeOfPokemon = arrayOf("${pokemonTypeONE.text}", "${pokemonTypeTWO.text}")
             listTypeOfPokemon = pokemon.listType*/
 
+            /*when(pokemon.listType) {
+                is "GRASS" -> {
+                pokemonTypeONE.isVisible = false
+                }
+            }*/
+
             if (pokemon.listType.count() < 2) {
                 pokemonTypeONE.text = pokemon.listType[0]
                 pokemonTypeTWO.isVisible = false
@@ -62,6 +70,15 @@ class PokemonAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
             pokemonName.text = pokemon.name
             pokemonGeneration.text = pokemon.generation
+
+            val requestOptions = RequestOptions()
+                .placeholder(R.drawable.ic_launcher_background)
+                .error(R.drawable.ic_launcher_background)
+
+            Glide.with(itemView.context)
+                .applyDefaultRequestOptions(requestOptions)
+                .load(pokemon.thumbnailUrl)
+                .into(pokemonImage)
 
         }
     }
